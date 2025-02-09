@@ -12,13 +12,23 @@ module Silencer
   end
 
   def self.ignore_warnings(file = '.silencer.yml')
-    YAML.load_file(file).each do |name, attrs|
+    YAML.load_file(config_file_path(file)).each do |name, attrs|
       version = attrs['version']
       spec = Gem::Specification.find_by_name(name)
       raise Error.new(name, version, spec.version.to_s) unless version == spec.version.to_s
       Array(attrs['patterns']).each do |pattern|
         Warning.ignore(Regexp.new(pattern), spec.gem_dir)
       end
+    end
+  end
+
+  def self.config_file_path(file)
+    if defined? ::Rails
+      ::Rails.root.join(file).to_s
+    elsif defined? ::Bundler
+      ::Bundler.root.join(file).to_s
+    else
+      file
     end
   end
 end
