@@ -23,9 +23,7 @@ module Silencer
   end
 
   def self.config_file_path(file)
-    if defined? ::Rails
-      ::Rails.root.join(file).to_s
-    elsif defined? ::Bundler
+    if defined? ::Bundler
       ::Bundler.root.join(file).to_s
     else
       file
