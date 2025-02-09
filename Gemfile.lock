@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    gem-silencer (0.2.0)
+    gem-silencer (0.3.0)
       warning (~> 1.0)
       yaml (~> 0.1)
 
