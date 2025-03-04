@@ -19,6 +19,8 @@ module Silencer
       Array(attrs['patterns']).each do |pattern|
         Warning.ignore(Regexp.new(pattern), spec.gem_dir)
       end
+    rescue Gem::LoadError
+      # ignore
     end
   end
 
