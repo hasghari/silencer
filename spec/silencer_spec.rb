@@ -44,5 +44,20 @@ RSpec.describe Silencer do
         expect { Silencer.ignore_warnings(file.path) }.to raise_error Silencer::Error
       end
     end
+
+    context 'when the gem is not found' do
+      let(:content) do
+        <<~YAML
+          lookbook:
+            version: 2.3.5
+            patterns:
+              - will be frozen in the future
+        YAML
+      end
+
+      it 'does nothing' do
+        expect { Silencer.ignore_warnings(file.path) }.not_to raise_error
+      end
+    end
   end
 end
