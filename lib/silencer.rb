@@ -17,7 +17,9 @@ module Silencer
       spec = Gem::Specification.find_by_name(name)
       raise Error.new(name, version, spec.version.to_s) unless version == spec.version.to_s
       Array(attrs['patterns']).each do |pattern|
-        Warning.ignore(Regexp.new(pattern), spec.gem_dir)
+        args = [Regexp.new(pattern)]
+        args << spec.gem_dir unless attrs.fetch('exclude_path_prefix', false)
+        Warning.ignore(*args)
       end
     rescue Gem::LoadError
       # ignore

@@ -49,7 +49,7 @@ RSpec.describe Silencer do
       let(:content) do
         <<~YAML
           lookbook:
-            version: 2.3.5
+            version: 2.3.14
             patterns:
               - will be frozen in the future
         YAML
